@@ -1,0 +1,22 @@
+{
+  "name": "ingenious-stream-youtube",
+  "version": "1.0.0",
+  "description": "A curated collection of YouTube-hosted movie metadata for streaming applications",
+  "main": "index.js",
+  "scripts": {
+    "fetch": "node scripts/fetch-tamil-movies.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "youtube",
+    "movies",
+    "tamil",
+    "metadata",
+    "streaming"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^24.34.0"
+  }
+}
