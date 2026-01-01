@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "fetch": "node scripts/fetch-tamil-movies.js",
+    "fetch-tamil-playlist": "node 00-extract/scripts/tamil/fetch-playlist.js",
+    "fetch-tamil-keywords": "node 00-extract/scripts/tamil/fetch-keywords.js",
+    "fetch-telugu-playlist": "node 00-extract/scripts/telugu/fetch-playlist.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
