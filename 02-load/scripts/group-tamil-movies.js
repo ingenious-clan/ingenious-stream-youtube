@@ -47,6 +47,29 @@ const metaData = {
 const metaFilePath = path.join(outputDir, '_meta.json');
 fs.writeFileSync(metaFilePath, JSON.stringify(metaData, null, 2), 'utf8');
 
+// Update the parent language _meta.json file with the count
+const languageMetaPath = path.join(__dirname, '../../movies/language/_meta.json');
+let languageMeta = [];
+
+if (fs.existsSync(languageMetaPath)) {
+  languageMeta = JSON.parse(fs.readFileSync(languageMetaPath, 'utf8'));
+}
+
+// Find and update Tamil entry, or create it if it doesn't exist
+const tamilIndex = languageMeta.findIndex(lang => lang.slug === 'tamil');
+if (tamilIndex !== -1) {
+  languageMeta[tamilIndex].count = movies.length;
+} else {
+  languageMeta.push({
+    name: 'Tamil',
+    slug: 'tamil',
+    count: movies.length
+  });
+}
+
+fs.writeFileSync(languageMetaPath, JSON.stringify(languageMeta, null, 2), 'utf8');
+
 console.log(`\n✓ Successfully grouped ${movies.length} movies into ${chunks.length} file(s)`);
 console.log(`✓ Created _meta.json with statistics`);
+console.log(`✓ Updated language _meta.json with count: ${movies.length}`);
 console.log(`✓ Output directory: ${outputDir}`);
