@@ -8,7 +8,15 @@
     "fetch-tamil-playlist": "node 00-extract/scripts/tamil/fetch-playlist.js",
     "fetch-tamil-keywords": "node 00-extract/scripts/tamil/fetch-keywords.js",
     "fetch-telugu-playlist": "node 00-extract/scripts/telugu/fetch-playlist.js",
-    "transform-tamil": "node 01-transform/scripts/tamil.js",
+    "transform-tamil": "node 02-load/scripts/filter-tamil.js",
+    "cleanup-tamil-playlist": "node 01-transform/scripts/cleanup-tamil-playlist.js",
+    "cleanup-tamil-playlist-01": "node 01-transform/scripts/cleanup-tamil-playlist-01.js",
+    "filter-tamil": "node 02-load/scripts/filter-tamil.js",
+    "group-tamil": "node 02-load/scripts/group-tamil-movies.js",
+    "extract": "npm run fetch-tamil-playlist && npm run fetch-tamil-keywords && npm run fetch-telugu-playlist",
+    "transform": "npm run transform-tamil && npm run cleanup-tamil-playlist && npm run cleanup-tamil-playlist-01",
+    "load": "npm run filter-tamil && npm run group-tamil",
+    "pipeline": "npm run extract && npm run transform && npm run load",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
