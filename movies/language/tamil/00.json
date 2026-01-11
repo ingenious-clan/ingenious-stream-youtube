@@ -18,21 +18,9 @@
     "isActive": true
   },
   {
-    "id": "malini-22-palayamkottai",
-    "name": "Malini 22 Palayamkottai",
-    "videoId": "0EtwC6borBI",
-    "isActive": true
-  },
-  {
     "id": "bhadra",
     "name": "Bhadra",
     "videoId": "vHV6PfNl-5Y",
-    "isActive": true
-  },
-  {
-    "id": "amma-kanakku",
-    "name": "Amma Kanakku",
-    "videoId": "064PexPCYdU",
     "isActive": true
   },
   {
@@ -165,12 +153,6 @@
     "id": "ramanujan",
     "name": "Ramanujan",
     "videoId": "zx6QsOdA4cQ",
-    "isActive": true
-  },
-  {
-    "id": "paarthale-paravasam-r",
-    "name": "Paarthale Paravasam R",
-    "videoId": "5mQaaCom3k0",
     "isActive": true
   },
   {
@@ -1197,6 +1179,24 @@
     "id": "galatta-ganapathy-pandiarajan-sanghavi",
     "name": "Galatta Ganapathy Pandiarajan Sanghavi",
     "videoId": "kybZtgu_S-0",
+    "isActive": true
+  },
+  {
+    "id": "duet-kbalachander-meenakshi-seshadri",
+    "name": "DUET KBalachander Meenakshi Seshadri",
+    "videoId": "LTDq5GTCCZM",
+    "isActive": true
+  },
+  {
+    "id": "oh-manju-master-sekar-kavitha-m-s-viswanathan-ayngaran",
+    "name": "Oh Manju Master Sekar Kavitha M S Viswanathan Ayngaran",
+    "videoId": "GFmjL5STN1U",
+    "isActive": true
+  },
+  {
+    "id": "padai-veetu-amman-ramki",
+    "name": "Padai Veetu Amman Ramki",
+    "videoId": "rBfRBWqcKng",
     "isActive": true
   }
 ]

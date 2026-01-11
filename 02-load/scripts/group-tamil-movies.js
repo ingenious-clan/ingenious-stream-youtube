@@ -9,9 +9,14 @@ const outputDir = path.join(__dirname, '../../movies/language/tamil');
 const MOVIES_PER_FILE = 200;
 
 // Read the input data
-const movies = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
+const allMovies = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
 
-console.log(`Total movies to group: ${movies.length}`);
+console.log(`Total movies found: ${allMovies.length}`);
+
+// Filter only active movies
+const movies = allMovies.filter(movie => movie.isActive === true);
+
+console.log(`Active movies to group: ${movies.length}`);
 
 // Ensure output directory exists
 if (!fs.existsSync(outputDir)) {

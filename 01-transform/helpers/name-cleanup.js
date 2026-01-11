@@ -5,18 +5,23 @@ const { cleanSpecialElements } = require("./clean-special-elements");
 // Load cleanup patterns from JSON files
 let cleanupPatterns = [];
 try {
-  // Load general cleanup patterns
-  const patternsPath = path.join(__dirname, '..', 'constants', 'tamil-cleanup.json');
-  const patternsData = fs.readFileSync(patternsPath, 'utf8');
-  const generalPatterns = JSON.parse(patternsData);
+  // Load Tamil cleanup patterns
+  const tamilPatternsPath = path.join(__dirname, '..', 'constants', 'tamil-cleanup.json');
+  const tamilPatternsData = fs.readFileSync(tamilPatternsPath, 'utf8');
+  const tamilPatterns = JSON.parse(tamilPatternsData);
+
+  // Load Telugu cleanup patterns
+  const teluguPatternsPath = path.join(__dirname, '..', 'constants', 'telugu-cleanup.json');
+  const teluguPatternsData = fs.readFileSync(teluguPatternsPath, 'utf8');
+  const teluguPatterns = JSON.parse(teluguPatternsData);
 
   // Load actor name cleanup patterns
   const actorPatternsPath = path.join(__dirname, '..', 'constants', 'actor-name-cleanup.json');
   const actorPatternsData = fs.readFileSync(actorPatternsPath, 'utf8');
   const actorPatterns = JSON.parse(actorPatternsData);
 
-  // Combine both pattern arrays
-  cleanupPatterns = [...generalPatterns, ...actorPatterns];
+  // Combine all pattern arrays and remove duplicates
+  cleanupPatterns = [...new Set([...tamilPatterns, ...teluguPatterns, ...actorPatterns])];
 } catch (error) {
   console.error('Error loading cleanup patterns:', error);
   // Fallback to empty array if file can't be loaded

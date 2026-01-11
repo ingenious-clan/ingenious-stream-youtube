@@ -5,7 +5,48 @@ const { createSlug } = require("../../01-transform/helpers/create-slug");
 
 // Directory containing the Tamil playlist JSON files
 const inputDir = path.join(__dirname, "../../00-extract/output/tamil/playlist");
+const videoDetailsDir = path.join(__dirname, "../../00-extract/output/tamil/playlist-video-details");
 const outputDir = path.join(__dirname, "../output/tamil");
+
+/**
+ * Parse duration string "HH:MM:SS" and return total minutes
+ * @param {string} time - Duration in format "HH:MM:SS"
+ * @returns {number} - Total minutes
+ */
+function parseDurationToMinutes(time) {
+  if (!time || typeof time !== 'string') return 0;
+
+  const parts = time.split(':').map(p => parseInt(p, 10));
+  if (parts.length === 3) {
+    const [hours, minutes, seconds] = parts;
+    return (hours * 60) + minutes + (seconds / 60);
+  }
+  return 0;
+}
+
+/**
+ * Determine if video should be active based on details
+ * @param {Object} details - Video details object
+ * @returns {boolean} - Whether video should be active
+ */
+function determineIsActive(details) {
+  // If no details, default to true
+  if (!details) return true;
+
+  // Check embeddable status
+  if (details.embeddable === false) return false;
+  if (details.embeddable === true || details.embeddable === "Unknown") {
+    // Check duration - must be at least 90 minutes
+    if (details.time) {
+      const durationMinutes = parseDurationToMinutes(details.time);
+      if (durationMinutes < 90) return false;
+    }
+    return true;
+  }
+
+  // Default to true if embeddable field is missing
+  return true;
+}
 
 // Function to read and process all Tamil playlist files
 async function processAllTamilVideos() {
@@ -20,6 +61,33 @@ async function processAllTamilVideos() {
   const files = fs.readdirSync(inputDir).filter(file => file.endsWith(".json"));
 
   console.log(`Found ${files.length} Tamil playlist files to process`);
+
+  // Load all video details into a map
+  const videoDetailsMap = new Map();
+  if (fs.existsSync(videoDetailsDir)) {
+    const detailFiles = fs.readdirSync(videoDetailsDir).filter(file => file.endsWith(".json"));
+    console.log(`Loading video details from ${detailFiles.length} files...`);
+
+    for (const detailFile of detailFiles) {
+      try {
+        const detailFilePath = path.join(videoDetailsDir, detailFile);
+        const detailData = JSON.parse(fs.readFileSync(detailFilePath, "utf8"));
+
+        if (detailData.result && Array.isArray(detailData.result)) {
+          for (const item of detailData.result) {
+            if (item.id && item.details) {
+              videoDetailsMap.set(item.id, item.details);
+            }
+          }
+        }
+      } catch (error) {
+        console.warn(`Error loading video details from ${detailFile}:`, error.message);
+      }
+    }
+    console.log(`Loaded details for ${videoDetailsMap.size} videos`);
+  } else {
+    console.warn(`Video details directory not found: ${videoDetailsDir}`);
+  }
 
   let allVideos = [];
   let totalPlaylists = 0;
@@ -53,12 +121,18 @@ async function processAllTamilVideos() {
           // Create a slug from the cleaned name to use as the id
           const nameSlug = createSlug(cleanedName);
 
+          // Get video details if available
+          const details = videoDetailsMap.get(video.id);
+
+          // Determine isActive status based on details
+          const isActive = determineIsActive(details);
+
           // Create a new object with only the required fields
           return {
             id: nameSlug,
             name: cleanedName,
             videoId: video.id,
-            isActive: true
+            isActive: isActive
           };
         })
         .filter(video => {

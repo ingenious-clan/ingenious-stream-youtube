@@ -2,6 +2,11 @@
   {
     "name": "Tamil",
     "slug": "tamil",
-    "count": 3513
+    "count": 3481
+  },
+  {
+    "name": "Telugu",
+    "slug": "telugu",
+    "count": 410
   }
 ]
